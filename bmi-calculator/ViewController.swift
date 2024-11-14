@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         
-        vc.bmiResultValue = String(value)
+        vc.bmiResultValue = value
         vc.bmiCategoryValue = message
         
         present(vc, animated: true) { [weak self] in
@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    private func bmiCalculator() -> (Double, String)?{
+    private func bmiCalculator() -> (String, String)?{
         guard
             let heightText = heightField.text,
             let weightText = weightField.text,
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         
         let status = BMIStatus.category(for: bmi).rawValue
         let roundedBMI = (bmi * 100).rounded() / 100
-        return (roundedBMI, status)
+        return (String(roundedBMI), status)
     }
     
     private func reset (){
