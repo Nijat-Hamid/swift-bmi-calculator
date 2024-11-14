@@ -12,6 +12,14 @@ class ViewControllerTwo: UIViewController {
     var bmiResultValue = "N/A"
     var bmiCategoryValue = "N/A"
     
+    weak var delegate : ViewControllerTextFieldDelegeate?
+    
+    @IBOutlet weak var feelingField: UITextField! {
+        didSet{
+            feelingField.delegate = self
+        }
+    }
+    
     @IBOutlet weak var bmiResult: UILabel!{
         didSet{
             bmiResult.text = bmiResultValue
@@ -33,4 +41,14 @@ class ViewControllerTwo: UIViewController {
     }
     
 
+}
+
+extension ViewControllerTwo:UITextFieldDelegate{
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        delegate?.didChangeText(text: textField.text)
+    }
+}
+
+protocol ViewControllerTextFieldDelegeate:UIViewController{
+    func didChangeText(text:String?)
 }

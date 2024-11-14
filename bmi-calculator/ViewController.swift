@@ -11,6 +11,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var heightField: UITextField!
     @IBOutlet weak var weightField: UITextField!
+    @IBOutlet weak var previousFeelingText: UILabel!
     
     @IBAction func calculateBotton(_ sender: UIButton) {
         guard let (value, message) = bmiCalculator() else { return }
@@ -19,6 +20,7 @@ class ViewController: UIViewController {
         
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
+        vc.delegate = self
         
         vc.bmiResultValue = value
         vc.bmiCategoryValue = message
@@ -78,4 +80,11 @@ enum BMIStatus: String {
             return .obesity
         }
     }
+}
+
+extension ViewController:ViewControllerTextFieldDelegeate{
+    func didChangeText(text: String?) {
+        previousFeelingText.text = text
+    }
+    
 }
