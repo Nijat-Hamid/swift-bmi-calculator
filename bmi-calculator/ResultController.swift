@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ViewControllerTwo: UIViewController {
+class ResultController: UIViewController {
    
     var bmiResultValue = "N/A"
     var bmiCategoryValue = "N/A"
     
-    weak var delegate : ViewControllerTextFieldDelegeate?
+    weak var delegate : ResultControllerTextFieldDelegeate?
     
     @IBOutlet weak var feelingField: UITextField! {
         didSet{
@@ -43,12 +43,12 @@ class ViewControllerTwo: UIViewController {
 
 }
 
-extension ViewControllerTwo:UITextFieldDelegate{
+extension ResultController:UITextFieldDelegate{
     func textFieldDidChangeSelection(_ textField: UITextField) {
         delegate?.didChangeText(text: textField.text)
     }
 }
 
-protocol ViewControllerTextFieldDelegeate:UIViewController{
+protocol ResultControllerTextFieldDelegeate:UIViewController{
     func didChangeText(text:String?)
 }

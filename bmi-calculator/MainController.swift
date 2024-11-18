@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainController: UIViewController {
 
     @IBOutlet weak var heightField: UITextField!
     @IBOutlet weak var weightField: UITextField!
@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     @IBAction func calculateBotton(_ sender: UIButton) {
         guard let (value, message) = bmiCalculator() else { return }
         let sb = UIStoryboard(name: "Result", bundle: nil)
-        guard let vc = sb.instantiateInitialViewController() as? ViewControllerTwo else { return }
+        guard let vc = sb.instantiateInitialViewController() as? ResultController else { return }
         
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
@@ -25,8 +25,8 @@ class ViewController: UIViewController {
         vc.bmiResultValue = value
         vc.bmiCategoryValue = message
         
-        present(vc, animated: true) { [weak self] in
-             self?.reset()
+        present(vc, animated: true) { [unowned self] in
+           reset()
          }
         
     
@@ -52,8 +52,8 @@ class ViewController: UIViewController {
         let bmi = weight / (heightM * heightM)
         
         let status = BMIStatus.category(for: bmi).rawValue
-        let roundedBMI = (bmi * 100).rounded() / 100
-        return (String(roundedBMI), status)
+        let roundedBMI = String(format: "%.2f", bmi)
+        return (roundedBMI, status)
     }
     
     private func reset (){
@@ -82,7 +82,7 @@ enum BMIStatus: String {
     }
 }
 
-extension ViewController:ViewControllerTextFieldDelegeate{
+extension MainController:ResultControllerTextFieldDelegeate{
     func didChangeText(text: String?) {
         previousFeelingText.text = text
     }
